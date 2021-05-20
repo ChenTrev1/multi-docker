@@ -3,7 +3,7 @@ services: #what services you will be using
   - docker #you want to get access to a copy of docker
 
 before_install: #What you'll do before installation
-  - docker build -t chennat234/react-test -f ./client/Docker.dev ./client #builds a test version of our client project and then run test inside of it
+  - docker build -t chennat234/react-test -f ./client/Dockerfile.dev ./client #builds a test version of our client project and then run test inside of it
 
 script: #primary test running section #if any of the scripts in here exit with a status code other than 0 then TravisCI will assume that build failed
   - docker run -e CI=true chennat234/react-test npm test
@@ -17,3 +17,8 @@ after_success: #goes through each subfolders and build images using the prod doc
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin #First part will retrieve docker password from env variable then emit 
     #that over stdin as input to the next command 
   # Take those images and push them to docker hub
+  - docker push chennat234/multi-client
+  - docker push chennat234/multi-nginx
+  - docker push chennat234/multi-server
+  - docker push chennat234/multi-worker
+
