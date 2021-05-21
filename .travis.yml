@@ -22,3 +22,14 @@ after_success: #goes through each subfolders and build images using the prod doc
   - docker push chennat234/multi-server
   - docker push chennat234/multi-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-371868300721'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
